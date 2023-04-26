@@ -8,11 +8,15 @@
           class="form-control"
           v-model="ipAddress"
           placeholder="Search for any IP address or domain"
+          @blur="v$.ipAddress.$touch"
         />
         <button id="search_btn" class="btn btn-dark" @click.prevent="getInfo">
           <font-awesome-icon icon="fa-solid fa-arrow-right" class="ico" />
         </button>
       </form>
+      <div v-if="v$.ipAddress.$error" class="unValid">
+        please enter valid ip Address
+      </div>
     </div>
     <div>
       <div class="display-container row">
@@ -20,6 +24,7 @@
           <h4 class="items-title">IP Address</h4>
           <span v-if="ipData" class="res">{{ ipData.ip }}</span>
           <span v-else class="res">Please enter an IP Address</span>
+          <v-skeleton-loader :content="thumbItem"></v-skeleton-loader>
         </div>
         <div class="card-info block-seperator col-md-12 col-lg-3 col-xl-3">
           <h4 class="items-title">Location</h4>
@@ -50,10 +55,20 @@
 </template>
 
 <script>
+import { useVuelidate } from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 const axios = require("axios");
+import VSkeletonLoader from "v-skeleton-loader";
 export default {
+  components: {
+    VSkeletonLoader,
+  },
+  setup() {
+    return { v$: useVuelidate() };
+  },
+
   data() {
     return {
       ipData: null,
@@ -63,6 +78,11 @@ export default {
       latitude: null,
       longitude: null,
       greenIcon: null,
+    };
+  },
+  validations() {
+    return {
+      ipAddress: { required }, // Matches this.firstName
     };
   },
   mounted() {
@@ -94,17 +114,21 @@ export default {
   },
   methods: {
     async getInfo() {
-      const url =
-        "https://geo.ipify.org/api/v2/country,city?apiKey=at_txjvfLQeGNvNJ6VzBdO5UjJBdowCy&ipAddress=" +
-        this.ipAddress;
-      const response = await axios.get(url);
-      this.ipData = response.data;
-      this.latitude = this.ipData.location.lat;
-      this.longitude = this.ipData.location.lng;
-      console.log(this.ipData);
-      this.map.setView([this.latitude, this.longitude], 13);
+      if (this.ipAddress == "") {
+        alert("please Enter a valid ip address");
+      } else {
+        const url =
+          "https://geo.ipify.org/api/v2/country,city?apiKey=at_txjvfLQeGNvNJ6VzBdO5UjJBdowCy&ipAddress=" +
+          this.ipAddress;
+        const response = await axios.get(url);
+        this.ipData = response.data;
+        this.latitude = this.ipData.location.lat;
+        this.longitude = this.ipData.location.lng;
+        console.log(this.ipData);
+        this.map.setView([this.latitude, this.longitude], 13);
 
-      this.addMarker();
+        this.addMarker();
+      }
     },
     addMarker() {
       this.greenIcon = L.icon({
