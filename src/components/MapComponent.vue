@@ -20,9 +20,6 @@
       <div v-if="v$.ipAddress.$error" class="unValid">
         please enter valid ip Address
       </div>
-      <div v-if="ipAddresss" class="unValid">
-        please enter valid ip Address hampudy
-      </div>
     </div>
     <div>
       <div class="display-container row">
@@ -65,13 +62,10 @@ import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { vMaska } from "maska"
+import { vMaska } from "maska";
 const axios = require("axios");
-import VSkeletonLoader from "v-skeleton-loader";
 export default {
-  components: {
-    VSkeletonLoader,
-  },
+
   setup() {
     return { v$: useVuelidate() };
   },
@@ -94,7 +88,6 @@ export default {
     };
   },
   mounted() {
-    // this.initMap();
     this.map = L.map("map", {
       zoomControl: true,
       zoom: 1,
@@ -121,17 +114,6 @@ export default {
       .bindPopup("Welcom in Turn Digital.");
   },
   methods: {
-    ValidateIPaddress(x) {
-      var ipformat =
-        /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-      if (x.match(ipformat)) {
-        console.log("tmam el donia tmam");
-        return (this.ipAddresss = false);
-      } else {
-        alert("You have entered an invalid IP address!");
-        return (this.ipAddresss = false);
-      }
-    },
     async getInfo() {
       if (this.ipAddress == "") {
         alert("please Enter a valid ip address");
