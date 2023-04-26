@@ -1,10 +1,6 @@
-$color_1: #fff;
-$color_2: #2b2b2b;
-$background-color_1: #000000;
-$background-color_2: #fff;
 
-h1.title {
-	color: $color_1;
+.title {
+	color: #fff;
 	font-size: 24px;
 	font-weight: 700;
 	margin-bottom: 20px;
@@ -29,7 +25,7 @@ h1.title {
 	border-radius: 0 10px 10px 0;
 	border: none;
 	padding: 17px;
-	background-color: $background-color_1;
+	background-color: #000000;
 	cursor: pointer;
 	position: absolute;
 	left: 90%;
@@ -39,7 +35,7 @@ h1.title {
 	align-items: center;
 	justify-content: space-around;
 	margin: -60px auto 0 auto;
-	background-color: $background-color_2;
+	background-color:  #fff;
 	max-width: 80%;
 	border-radius: 10px;
 	box-shadow: 0 0 50px rgba(0, 0, 0, 0.471);
@@ -62,6 +58,6 @@ h1.title {
 .res {
 	text-align: start;
 	font-weight: bold;
-	color: $color_2;
+	color:#2b2b2b;
 	font-size: 16px;
 }
