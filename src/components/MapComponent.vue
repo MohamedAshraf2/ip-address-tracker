@@ -45,17 +45,52 @@
         </div>
       </div>
     </div>
+    <div id="map" class="map-container"></div>
   </div>
 </template>
 
 <script>
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 const axios = require("axios");
 export default {
   data() {
     return {
       ipData: null,
       ipAddress: "",
+      map: null,
+      marker: "",
+      latitude: null,
+      longitude: null,
+      greenIcon: null,
     };
+  },
+  mounted() {
+    // this.initMap();
+    this.map = L.map("map", {
+      zoomControl: true,
+      zoom: 1,
+      zoomAnimation: false,
+      fadeAnimation: true,
+      markerZoomAnimation: true,
+    }).setView([29.960925752603092, 31.27223940430157], 13);
+
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 18,
+      attribution:
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(this.map);
+    this.greenIcon = L.icon({
+      iconUrl: require("../assets/marker.svg"),
+      iconSize: [25, 45], // size of the icon
+      shadowSize: [50, 64], // size of the shadow
+      iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+      shadowAnchor: [4, 62], // the same for the shadow
+      popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+    });
+    L.marker([29.960925752603092, 31.27223940430157], { icon: this.greenIcon })
+      .addTo(this.map)
+      .bindPopup("Welcom in Turn Digital.");
   },
   methods: {
     async getInfo() {
@@ -64,12 +99,31 @@ export default {
         this.ipAddress;
       const response = await axios.get(url);
       this.ipData = response.data;
+      this.latitude = this.ipData.location.lat;
+      this.longitude = this.ipData.location.lng;
       console.log(this.ipData);
+      this.map.setView([this.latitude, this.longitude], 13);
+
+      this.addMarker();
+    },
+    addMarker() {
+      this.greenIcon = L.icon({
+        iconUrl: require("../assets/marker.svg"),
+
+        iconSize: [20, 45], // size of the icon
+        shadowSize: [50, 64], // size of the shadow
+        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62], // the same for the shadow
+        popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+      });
+      L.marker([this.latitude, this.longitude], { icon: this.greenIcon })
+        .addTo(this.map)
+        .bindPopup("Welcom in Turn Digital.");
     },
   },
 };
 </script>
 
 <style scoped>
-  @import "./styles.css";
+@import "./styles.css";
 </style>
