@@ -5,6 +5,9 @@
       <form class="form-elements col-md-11 col-lg-4 col-xl-4">
         <input
           type="text"
+          v-maska
+          data-maska="#00.#00.#00.#00"
+          data-maska-tokens="0:[0-9]:optional"
           class="form-control"
           v-model="ipAddress"
           placeholder="Search for any IP address or domain"
@@ -16,6 +19,9 @@
       </form>
       <div v-if="v$.ipAddress.$error" class="unValid">
         please enter valid ip Address
+      </div>
+      <div v-if="ipAddresss" class="unValid">
+        please enter valid ip Address hampudy
       </div>
     </div>
     <div>
@@ -59,6 +65,7 @@ import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { vMaska } from "maska"
 const axios = require("axios");
 import VSkeletonLoader from "v-skeleton-loader";
 export default {
@@ -68,11 +75,12 @@ export default {
   setup() {
     return { v$: useVuelidate() };
   },
-
+  directives: { maska: vMaska },
   data() {
     return {
       ipData: null,
       ipAddress: "",
+      ipAddresss: false,
       map: null,
       marker: "",
       latitude: null,
@@ -113,6 +121,17 @@ export default {
       .bindPopup("Welcom in Turn Digital.");
   },
   methods: {
+    ValidateIPaddress(x) {
+      var ipformat =
+        /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+      if (x.match(ipformat)) {
+        console.log("tmam el donia tmam");
+        return (this.ipAddresss = false);
+      } else {
+        alert("You have entered an invalid IP address!");
+        return (this.ipAddresss = false);
+      }
+    },
     async getInfo() {
       if (this.ipAddress == "") {
         alert("please Enter a valid ip address");
