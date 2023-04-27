@@ -20,6 +20,8 @@
 	text-align: center;
 	padding: 20px;
 	min-height: 250px;
+	position: relative;
+	z-index: 500;
 }
 .form-elements {
 	position: relative;
