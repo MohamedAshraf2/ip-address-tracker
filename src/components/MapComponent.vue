@@ -28,20 +28,20 @@
       <div class="display-container row">
         <div class="card-info block-seperator col-md-12 col-lg-3 col-xl-3">
           <h4 class="items-title">IP Address</h4>
-          <span v-if="ipData" class="res">{{ ipData.ip }}</span>
+          <span v-if="ipData" class="res">{{ ipAddress }}</span>
           <span v-else class="res">Please enter an IP Address</span>
         </div>
         <div class="card-info block-seperator col-md-12 col-lg-3 col-xl-3">
           <h4 class="items-title">Location</h4>
           <span v-if="ipData" class="res"
-            >{{ ipData.location.city }}, {{ ipData.location.region }},
+            >{{ ipData.location.city }}, {{ ipData.region }},
             {{ ipData.location.country }}</span
           >
           <span v-else class="res">Please enter an IP Address</span>
         </div>
         <div class="card-info block-seperator col-md-12 col-lg-3 col-xl-3">
           <h4 class="items-title">Timezone</h4>
-          <span v-if="ipData" class="res">{{ ipData.location.timezone }}</span>
+          <span v-if="ipData" class="res">{{ ipData.timezone }}</span>
           <span v-else class="res">Please enter an IP Address</span>
         </div>
         <div class="card-info col-md-12 col-lg-3 col-xl-3">
@@ -128,13 +128,14 @@ export default {
         alert("please Enter a valid ip address");
        
       } else {
-        const url =
-          "https://geo.ipify.org/api/v2/country,city?apiKey=at_txjvfLQeGNvNJ6VzBdO5UjJBdowCy&ipAddress=" +
-          this.ipAddress;
+        // const url =
+        //   "https://geo.ipify.org/api/v2/country,city?apiKey=at_txjvfLQeGNvNJ6VzBdO5UjJBdowCy&ipAddress=" +
+        //   this.ipAddress;
+        const url = 'http://ip-api.com/json/' + this.ipAddress;
         const response = await axios.get(url);
         this.ipData = response.data;
-        this.latitude = this.ipData.location.lat;
-        this.longitude = this.ipData.location.lng;
+        this.latitude = this.ipData.lat;
+        this.longitude = this.ipData.lon;
         console.log(this.ipData);
         this.map.setView([this.latitude, this.longitude], 13);
 

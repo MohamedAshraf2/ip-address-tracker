@@ -90,6 +90,14 @@
 	}
 }
 
+@media screen and (max-width: 368px) {
+
+	.map-container {
+		margin-top: -300px;
+	}
+}
+
+
 .loader{
 	margin-top: 100px;
 }
