@@ -34,8 +34,8 @@
         <div class="card-info block-seperator col-md-12 col-lg-3 col-xl-3">
           <h4 class="items-title">Location</h4>
           <span v-if="ipData" class="res"
-            >{{ ipData.location.city }}, {{ ipData.region }},
-            {{ ipData.location.country }}</span
+            >{{ ipData.city }}, {{ ipData.region }},
+            {{ ipData.country }}</span
           >
           <span v-else class="res">Please enter an IP Address</span>
         </div>
