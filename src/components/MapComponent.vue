@@ -29,36 +29,42 @@
         <div class="card-info block-seperator col-md-12 col-lg-3 col-xl-3">
           <h4 class="items-title">IP Address</h4>
           <span v-if="ipData" class="res">{{ ipAddress }}</span>
-          <span v-else class="res">Please enter an IP Address</span>
+          <span v-else class="res"
+            >Please enter an IP Address
+            <img src="../assets/loading2.gif" alt="Loading" class="loader2"
+          /></span>
         </div>
         <div class="card-info block-seperator col-md-12 col-lg-3 col-xl-3">
           <h4 class="items-title">Location</h4>
           <span v-if="ipData" class="res"
-            >{{ ipData.city }}, {{ ipData.region }},
-            {{ ipData.country }}</span
+            >{{ ipData.city }}, {{ ipData.region }}, {{ ipData.country }}</span
           >
-          <span v-else class="res">Please enter an IP Address</span>
+          <span v-else class="res"
+            >Please enter an IP Address
+            <img src="../assets/loading2.gif" alt="Loading" class="loader2"
+          /></span>
         </div>
         <div class="card-info block-seperator col-md-12 col-lg-3 col-xl-3">
           <h4 class="items-title">Timezone</h4>
           <span v-if="ipData" class="res">{{ ipData.timezone }}</span>
-          <span v-else class="res">Please enter an IP Address</span>
+          <span v-else class="res"
+            >Please enter an IP Address
+            <img src="../assets/loading2.gif" alt="Loading" class="loader2"
+          /></span>
         </div>
         <div class="card-info col-md-12 col-lg-3 col-xl-3">
           <h4 class="items-title">ISP</h4>
           <span v-if="ipData" id="current_isp" class="res">{{
             ipData.isp
           }}</span>
-          <span v-else id="current_isp" class="res"
-            >Please enter an IP Address</span
-          >
+          <span v-else class="res"
+            >Please enter an IP Address
+            <img src="../assets/loading2.gif" alt="Loading" class="loader2"
+          /></span>
         </div>
       </div>
     </div>
-    
-    <div  id="map" class="map-container">
-      <img v-if="ipData === null" src="../assets/loading.gif" alt="Loading" class="loader"/>
-    </div>
+    <div id="map" class="map-container"></div>
   </div>
 </template>
 
@@ -80,7 +86,7 @@ export default {
       ipAddress: "",
       ipAddresss: false,
       map: null,
-      marker: "",
+      marker: {},
       latitude: null,
       longitude: null,
       greenIcon: null,
@@ -106,43 +112,46 @@ export default {
       attribution:
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map);
-  
-      this.greenIcon = L.icon({
-        iconUrl: require("../assets/marker.svg"),
 
-        iconSize: [40, 50], // size of the icon
-        shadowSize: [50, 64], // size of the shadow
-        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-        shadowAnchor: [4, 62], // the same for the shadow
-        popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
-      });
-      L.marker([29.960925752603092, 31.27223940430157], { icon: this.greenIcon })
-        .addTo(this.map)
-        .bindPopup("Welcom in Turn Digital.");
-    
+    // this.greenIcon = L.icon({
+    //   iconUrl: require("../assets/marker.svg"),
+
+    //   iconSize: [40, 50], // size of the icon
+    //   shadowSize: [50, 64], // size of the shadow
+    //   iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+    //   shadowAnchor: [4, 62], // the same for the shadow
+    //   popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+    // });
+    // L.marker([29.960925752603092, 31.27223940430157], { icon: this.greenIcon })
+    //   .addTo(this.map)
+    //   .bindPopup("Welcom in Turn Digital.");
   },
   methods: {
     async getInfo() {
-      try{
-      if (this.ipAddress == "") {
-        alert("please Enter a valid ip address");
-       
-      } else {
-        // const url =
-        //   "https://geo.ipify.org/api/v2/country,city?apiKey=at_txjvfLQeGNvNJ6VzBdO5UjJBdowCy&ipAddress=" +
-        //   this.ipAddress;
-        const url = 'http://ip-api.com/json/' + this.ipAddress;
-        const response = await axios.get(url);
-        this.ipData = response.data;
-        this.latitude = this.ipData.lat;
-        this.longitude = this.ipData.lon;
-        console.log(this.ipData);
-        this.map.setView([this.latitude, this.longitude], 13);
-
-        this.addMarker();
-      }}catch(e){
+      try {
+        if (this.ipAddress == "") {
+          alert("please Enter a valid ip address");
+        } else {
+          // const url =
+          //   "https://geo.ipify.org/api/v2/country,city?apiKey=at_txjvfLQeGNvNJ6VzBdO5UjJBdowCy&ipAddress=" +
+          //   this.ipAddress;
+          const url = "http://ip-api.com/json/" + this.ipAddress;
+          const response = await axios.get(url);
+          this.ipData = response.data;
+          this.latitude = this.ipData.lat;
+          this.longitude = this.ipData.lon;
+          console.log(this.ipData);
+          this.map.setView([this.latitude, this.longitude], 13);
+          this.remouvMarker()
+          this.addMarker();
+        }
+      } catch (e) {
         this.$toast.error(e);
       }
+    },
+    remouvMarker(){
+      this.map.removeLayer(this.marker)
+      console.log('marker removed ');
     },
     addMarker() {
       this.greenIcon = L.icon({
@@ -154,9 +163,9 @@ export default {
         shadowAnchor: [4, 62], // the same for the shadow
         popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
       });
-      L.marker([this.latitude, this.longitude], { icon: this.greenIcon })
+     this.marker = L.marker([this.latitude, this.longitude], { icon: this.greenIcon })
         .addTo(this.map)
-        .bindPopup("Welcom in Turn Digital.");
+        .bindPopup("Welcom in Turn Digital.")
     },
   },
 };

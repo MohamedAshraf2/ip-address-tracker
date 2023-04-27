@@ -75,8 +75,10 @@
 
 .map-container {
 	background-color: black;
-	margin-top: -70px;
-	min-height: 79vh;
+	position: relative;
+	bottom: 70px;
+	height: 700px;
+	/* min-height: 79vh; */
   }
 @media screen and (max-width: 992px) {
 	.display-container{
@@ -86,18 +88,34 @@
 		margin-bottom:15px;
 	}
 	.map-container {
-		margin-top: -200px;
+		top: -260px;
+	}
+	.card-info{
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-around;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.card-info{
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.map-container {
+		/* top: -340px; */
 	}
 }
 
 @media screen and (max-width: 368px) {
 
 	.map-container {
-		margin-top: -300px;
+		top: -300px;
 	}
+	
+}
+.loader2{
+	width: 20px;
 }
 
-
-.loader{
-	margin-top: 100px;
-}
