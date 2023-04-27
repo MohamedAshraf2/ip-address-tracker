@@ -9,14 +9,14 @@
 	font-size: 15px;
 	font-weight: bold;
 	color: red;
-	background-color: white;
-	margin: 10px auto 0px auto;
+	margin:0px auto 0px auto;
 	height: 30px;
-	width: 30%;
+	/* width: 30%; */
 	border-radius: 10px;
 }
+
 .form-container {
-	background: url("../assets/pg.jpeg") no-repeat 100% 100% / cover;
+	background: url("../assets/bg2.png") no-repeat 100% 100% / cover;
 	text-align: center;
 	padding: 20px;
 	min-height: 250px;
@@ -28,7 +28,7 @@
 .form-control {
 	padding: 17px;
 	width: 91%;
-	border-radius: 10px;
+	border-radius: 10px 0 0 10px;
 	border: none;
 }
 .btn {
@@ -72,8 +72,24 @@
 	color:#2b2b2b;
 	font-size: 16px;
 }
+
 .map-container {
 	background-color: black;
 	margin-top: -70px;
 	min-height: 79vh;
   }
+@media screen and (max-width: 992px) {
+	.display-container{
+		margin-top: -100px;
+	}
+	.res{
+		margin-bottom:15px;
+	}
+	.map-container {
+		margin-top: -200px;
+	}
+}
+
+.loader{
+	margin-top: 100px;
+}
