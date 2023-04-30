@@ -5,6 +5,9 @@
 	font-weight: 700;
 	margin-bottom: 20px;
 }
+.ip-tracker{
+	height: 100vh;
+}
 .unValid{
 	font-size: 15px;
 	font-weight: bold;
