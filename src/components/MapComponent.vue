@@ -29,10 +29,10 @@
           <div v-if="isLoading==false" class="display-container-items">
             <div class="card-info block-seperator col-md-12 col-lg-3 col-xl-3">
               <h4 class="items-title">IP Address</h4>
-              <span v-if="ipData" class="res">{{ ipAddress }}</span>
+              <span v-if="ipData" class="res">{{ ipData.query }}</span>
               <span v-else class="res"
-                >Please enter an IP Address
-                <!-- <img src="../assets/loading2.gif" alt="Loading" class="loader2" /> -->
+                >
+                  Please enter an IP Address
               </span>
             </div>
             <div class="card-info block-seperator col-md-12 col-lg-3 col-xl-3">
@@ -43,7 +43,6 @@
               >
               <span v-else class="res"
                 >Please enter an IP Address
-                <!-- <img src="../assets/loading2.gif" alt="Loading" class="loader2" /> -->
               </span>
             </div>
             <div class="card-info block-seperator col-md-12 col-lg-3 col-xl-3">
@@ -51,7 +50,6 @@
               <span v-if="ipData" class="res">{{ ipData.timezone }}</span>
               <span v-else class="res"
                 >Please enter an IP Address
-                <!-- <img src="../assets/loading2.gif" alt="Loading" class="loader2" /> -->
               </span>
             </div>
             <div class="card-info col-md-12 col-lg-3 col-xl-3">
@@ -137,7 +135,9 @@ export default {
           this.isLoading=false
         }
       } catch (e) {
-        this.$toast.error(e);
+        this.ipData = null
+        this.isLoading =false
+        this.$toast.error("Bad request");
       }
     },
   
