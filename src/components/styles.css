@@ -6,7 +6,7 @@
 	margin-bottom: 20px;
 }
 .ip-tracker{
-	height: auto;
+	height: 100vh;
 }
 .unValid{
 	font-size: 15px;
@@ -84,7 +84,7 @@
 	background-color: black;
 	position: relative;
 	bottom: 70px;
-	height: 700px;
+	height: 100vh;
 	/* min-height: 79vh; */
   }
   .display-container-items{
