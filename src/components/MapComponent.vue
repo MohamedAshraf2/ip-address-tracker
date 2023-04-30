@@ -164,19 +164,6 @@ export default {
   },
   watch: {
     ipData(){
-      // if(typeof data == 'undefined'){
-      //   setTimeout(() => this.isLoading = true, 3500);
-      //   console.log(data);
-      //   console.log(this.isLoading);
-      // }else{
-      //   setTimeout(() => this.isLoading = false, 3500);
-        
-      //   console.log(this.isLoading);
-      //   console.log(data);
-      // }
-
-
-
     }
   },
 };
